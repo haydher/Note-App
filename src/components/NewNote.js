@@ -1,46 +1,32 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { addNoteToDb } from "./firebase/utils";
 import { useDispatch } from "react-redux";
 import { closeNewNote } from "../redux/newNoteBtnReducer";
-import { updateData } from "../redux/noteDataReducer";
 
 import { OpenNoteStyle } from "./styles/OpenNote.style";
 import { NoteHeader, NoteTags, NoteData } from "./styles/NoteCard.style";
 import Quill from "./Quill";
 import Input from "./Input";
 
-// get current date and time for new note
-const getCurrDate = () => {
- const months = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
- const date = new Date();
-
- // get time
- let hours = date.getHours();
- let minutes = date.getMinutes();
- const ampm = hours >= 12 ? "pm" : "am";
- hours = hours % 12;
- hours = hours ? hours : 12;
- minutes = minutes < 10 ? `0${minutes}` : minutes;
- const time = `${hours}:${minutes} ${ampm}`;
-
- return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()} -  ${time} `;
-};
-
-const getRandId = (max) => {
- return Math.floor(Math.random() * max);
-};
+import { getCurrDate } from "./utilities";
 
 const NewNote = ({ topHeight }) => {
  // redux
  const dispatch = useDispatch();
 
  // store the data temporarily
- const [newNoteData, setNewNoteData] = useState({
-  id: getRandId(99999999),
+ const dataStruct = {
+  id: uuidv4(),
   title: "Untitled",
   tags: "",
   noteData: "",
   date: getCurrDate(),
- });
+  trash: false,
+  stared: false,
+ };
+
+ const [newNoteData, setNewNoteData] = useState(dataStruct);
 
  const getData = (e, type) => {
   const is_title = type === "Untitled";
@@ -64,10 +50,16 @@ const NewNote = ({ topHeight }) => {
 
  // send the updated data to redux
  useEffect(() => {
-  dispatch(updateData(newNoteData));
+  // add the note being typed to db if user types something
+  if (
+   newNoteData.title === "Untitled" &&
+   newNoteData.noteData.length < 1 &&
+   (newNoteData.tags === "tags" || newNoteData.tags === "")
+  )
+   return;
+  addNoteToDb(newNoteData, newNoteData.id);
  }, [newNoteData, dispatch]);
 
- console.log("topHeight", topHeight);
  return (
   <OpenNoteStyle topHeight={topHeight}>
    <NoteHeader>
