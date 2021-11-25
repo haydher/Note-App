@@ -2,6 +2,7 @@ import { HeaderStyle } from "./styles/Header.style";
 import { HeaderLeftStyle, HeaderRightStyle } from "./styles/HeaderChild.style";
 import { useDispatch } from "react-redux";
 import { newNote } from "../redux/newNoteBtnReducer";
+import { updateNoteGridState } from "../redux/toggleGridReducer";
 
 const Header = () => {
  // redux
@@ -18,7 +19,7 @@ const Header = () => {
    </HeaderLeftStyle>
 
    <HeaderRightStyle>
-    <div className="sortBtn">
+    <div className="sortBtn" onClick={() => dispatch(updateNoteGridState())}>
      <img src="imgs/sort.svg" alt="sort button" />
     </div>
     <div className="newNote" onClick={() => dispatch(newNote())}>

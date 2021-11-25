@@ -44,6 +44,22 @@ export const NoteHeader = styled.div`
  }
 `;
 
+export const Utilities = styled.div`
+ svg,
+ path,
+ circle {
+  stroke: ${({ theme, active }) => (active !== "" ? theme.textColor : theme.primaryColor)};
+ }
+`;
+
+export const Icon = styled.div`
+ svg,
+ path,
+ circle {
+  fill: ${({ theme, fillSvg, active }) => (fillSvg ? (active !== "" ? theme.textColor : theme.primaryColor) : "none")};
+ }
+`;
+
 export const NoteTags = styled.div`
  color: ${({ theme }) => theme.primaryColor};
  padding: 10px 0 10px 0;
@@ -58,9 +74,11 @@ export const NoteData = styled.div`
  position: relative;
  max-height: 200px !important;
  width: 100%;
+ cursor: pointer;
  overflow: hidden;
 
  .overflow {
+  cursor: pointer;
   position: absolute;
   background: rgba(0, 0, 0, 0);
   background: linear-gradient(
@@ -98,6 +116,11 @@ export const ShareBtnStyle = styled.div`
  border-radius: 100px;
  margin-left: 10px;
  transition: background-color 0.3s ease;
+
+ svg path {
+  fill: ${({ theme, active }) => (active !== "" ? theme.textColor : theme.primaryColor)};
+  stroke: ${({ theme, active }) => (active !== "" ? theme.textColor : theme.primaryColor)};
+ }
 
  &:hover {
   background-color: #f3f3f3;

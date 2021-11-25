@@ -18,6 +18,8 @@ const MainContent = () => {
  console.log("data", data);
  // redux
  const { newNote } = useSelector((state) => state.toggleNewNoteBtn);
+ // change notes layout from grid
+ const { toggleNoteGrid } = useSelector((state) => state.toggleGrid);
 
  // toggle open the opened note tab
  const [noteOpen, setNoteOpen] = useState(false);
@@ -52,20 +54,26 @@ const MainContent = () => {
 
  return (
   <NoteContainerStyle topHeight={height}>
-   <NoteCardContainerStyle toggleGrid={(newNote || noteOpen) && true} ref={refContainer} topHeight={height}>
+   <NoteCardContainerStyle
+    toggleGrid={(newNote || noteOpen || toggleNoteGrid) && true}
+    ref={refContainer}
+    topHeight={height}
+   >
     {/* show all the notes */}
     {data !== undefined &&
-     data.map((noteData, index) => (
-      <NoteCard
-       key={noteData.id}
-       index={index}
-       data={noteData}
-       noteClick={openNote}
-       isNoteOpen={(newNote || noteOpen) && true}
-       toggle={toggleActive}
-       active={active}
-      />
-     ))}
+     data
+      .filter((noteData) => !noteData.trash)
+      .map((noteData, index) => (
+       <NoteCard
+        key={noteData.id}
+        index={index}
+        data={noteData}
+        noteClick={openNote}
+        isNoteOpen={(newNote || noteOpen) && true}
+        toggle={toggleActive}
+        active={active}
+       />
+      ))}
    </NoteCardContainerStyle>
    {/* only show the open not if value is true */}
    {noteOpen && !newNote && <OpenNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} />}

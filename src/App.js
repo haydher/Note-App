@@ -6,7 +6,7 @@ import { MainContainer } from "./components/MainContainer";
 
 const App = () => {
  // const [theme, setTheme] = useState("dark");
- const theme = "dark";
+ const theme = "light";
 
  return (
   <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>

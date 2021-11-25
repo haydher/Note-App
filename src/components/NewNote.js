@@ -8,6 +8,8 @@ import { OpenNoteStyle } from "./styles/OpenNote.style";
 import { NoteHeader, NoteTags, NoteData } from "./styles/NoteCard.style";
 import Quill from "./Quill";
 import Input from "./Input";
+// clean user input
+import DOMPurify from "dompurify";
 
 import { getCurrDate } from "./utilities";
 
@@ -40,11 +42,8 @@ const NewNote = ({ topHeight }) => {
 
   if (type === "data")
    setNewNoteData((oldObj) => ({
-    id: oldObj.id,
-    title: oldObj.title,
-    tags: oldObj.tags,
-    noteData: e,
-    date: getCurrDate(),
+    ...oldObj,
+    noteData: DOMPurify.sanitize(e),
    }));
  };
 

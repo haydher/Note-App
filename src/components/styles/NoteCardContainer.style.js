@@ -6,7 +6,7 @@ export const NoteCardContainerStyle = styled.div`
  grid-column-gap: 40px;
  grid-auto-rows: min-content;
  grid-row-gap: 40px;
- width: ${({ toggleGrid }) => (toggleGrid === true ? "50%" : "")};
+ width: ${({ toggleGrid }) => (toggleGrid === true ? "50%" : "100%")};
  padding-right: ${({ toggleGrid }) => (toggleGrid === true ? "10px" : "")};
  margin-right: ${({ toggleGrid }) => (toggleGrid === true ? "10px" : "")};
  margin-bottom: 25px;

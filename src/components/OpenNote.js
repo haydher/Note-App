@@ -1,5 +1,6 @@
 import { OpenNoteStyle } from "./styles/OpenNote.style";
 import { NoteHeader, NoteTags, NoteData } from "./styles/NoteCard.style";
+import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 
 const OpenNote = ({ noteOpenData, closeOpenNote }) => {
@@ -33,7 +34,7 @@ const OpenNote = ({ noteOpenData, closeOpenNote }) => {
    </NoteTags>
 
    <NoteData className="NoteData scroll ql-editor">
-    {noteOpenData.noteData !== undefined && parse(noteOpenData.noteData)}
+    {noteOpenData.noteData !== undefined && parse(DOMPurify.sanitize(noteOpenData.noteData))}
    </NoteData>
   </OpenNoteStyle>
  );
