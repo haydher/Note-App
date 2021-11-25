@@ -15,6 +15,7 @@ import { closeNewNote } from "../redux/newNoteBtnReducer";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import { deleteData, starData } from "./firebase/utils";
+
 const NoteCard = ({ noteClick, data, isNoteOpen, index, active, toggle }) => {
  //
 
@@ -66,8 +67,6 @@ const NoteCard = ({ noteClick, data, isNoteOpen, index, active, toggle }) => {
         strokeLinejoin="round"
        />
       </svg>
-
-      {/* <img src="imgs/trash.svg" alt="Close note" /> */}
      </Icon>
      {console.log(data.stared)}
      <Icon
@@ -86,17 +85,13 @@ const NoteCard = ({ noteClick, data, isNoteOpen, index, active, toggle }) => {
         strokeLinejoin="round"
        />
       </svg>
-
-      {/* <img src="imgs/star.svg" alt="Star card" /> */}
      </Icon>
 
-     <Icon className="selectNote" fillSvg={false} active={active === index ? "active" : ""}>
+     {/* <Icon className="selectNote" fillSvg={false} active={active === index ? "active" : ""}>
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
        <circle id="Ellipse 13" cx="9" cy="9" r="8" stroke="#C490E4" strokeWidth="2" />
       </svg>
-
-      {/* <img src="imgs/task.svg" alt="select note" /> */}
-     </Icon>
+     </Icon> */}
     </Utilities>
    </NoteHeader>
 

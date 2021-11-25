@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const UserProfileStyle = styled.div`
+ position: relative;
  background-color: ${({ theme }) => theme.primaryColor};
  display: flex;
  height: 50px;
@@ -8,7 +9,13 @@ export const UserProfileStyle = styled.div`
  color: white;
  border-radius: 100px;
  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+ cursor: pointer;
 
+ .dropDown {
+  position: absolute;
+  background-color: red;
+  bottom: 0;
+ }
  & p {
   margin: 45% auto 0 auto;
   transform: translateY(-45%);

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { addNoteToDb } from "./firebase/utils";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { closeNewNote } from "../redux/newNoteBtnReducer";
 
 import { OpenNoteStyle } from "./styles/OpenNote.style";
 import { NoteHeader, NoteTags, NoteData } from "./styles/NoteCard.style";
 import Quill from "./Quill";
 import Input from "./Input";
+
 // clean user input
 import DOMPurify from "dompurify";
 
@@ -16,6 +17,7 @@ import { getCurrDate } from "./utilities";
 const NewNote = ({ topHeight }) => {
  // redux
  const dispatch = useDispatch();
+ const { userState } = useSelector((state) => state.userState);
 
  // store the data temporarily
  const dataStruct = {
@@ -56,7 +58,7 @@ const NewNote = ({ topHeight }) => {
    (newNoteData.tags === "tags" || newNoteData.tags === "")
   )
    return;
-  addNoteToDb(newNoteData, newNoteData.id);
+  addNoteToDb(userState, newNoteData, newNoteData.id);
  }, [newNoteData, dispatch]);
 
  return (

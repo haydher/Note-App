@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import "firebase/firestore";
+import "firebase/auth";
 
 const firebaseConfig = {
  apiKey: process.env.REACT_APP_APIKEY,
@@ -13,4 +14,5 @@ const firebaseConfig = {
 
 // initialize it only once
 if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
+export const auth = firebase.auth();
 export const db = firebase.firestore();
