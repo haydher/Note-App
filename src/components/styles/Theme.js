@@ -18,7 +18,7 @@ export const lightTheme = {
 export const darkTheme = {
  primaryColor: "#c490e4",
  secondaryColor: "#f6c6ea",
- secondaryColorHover: "#f6c6ea",
+ secondaryColorHover: "#FFB2EC",
  tertiaryColor: "#5a5a5a",
  textColor: "#d4d4d4",
  LinkColor: "#96BAFF",

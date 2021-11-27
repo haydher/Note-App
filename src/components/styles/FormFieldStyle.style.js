@@ -7,10 +7,12 @@ export const FormFieldStyle = styled.div`
   width: 350px;
 
   input {
+   background-color: ${({ theme }) => theme.bodyBgColorTone3};
    width: 100%;
    padding: 15px 15px;
    border-radius: 8px;
    border: none;
+   color: ${({ theme }) => theme.textColor};
 
    :focus {
     outline: none;
@@ -25,7 +27,7 @@ export const FormFieldStyle = styled.div`
    left: 15px;
    color: ${({ theme }) => theme.textColor};
    font-weight: 500;
-   font-size: 14px;
+   font-size: 13px;
    user-select: none;
    pointer-events: none;
   }
@@ -49,7 +51,7 @@ export const FormFieldStyle = styled.div`
     top: 0;
     transform: translateY(-140%);
     left: 0;
-    font-size: 16px;
+    font-size: 14px;
    }
   }
   @keyframes animatePlaceHolderBack {
@@ -57,7 +59,7 @@ export const FormFieldStyle = styled.div`
     top: 0;
     transform: translateY(-140%);
     left: 0;
-    font-size: 16px;
+    font-size: 14px;
    }
    100% {
     top: 50%;
@@ -72,5 +74,22 @@ export const FormFieldStyle = styled.div`
   font-size: 14px;
   font-weight: 600;
   padding-top: 12px;
+ }
+
+ .togglePassword {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  svg,
+  path {
+   stroke: ${({ theme }) => theme.textColor};
+  }
  }
 `;

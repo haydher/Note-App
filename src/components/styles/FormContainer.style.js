@@ -17,5 +17,6 @@ export const FormContainer = styled.div`
  p:last-child {
   padding-top: 12px;
   font-size: 14px;
+  color: ${({ theme }) => theme.textColor};
  }
 `;

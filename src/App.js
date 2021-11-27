@@ -12,7 +12,7 @@ import AuthForm from "./components/AuthForm";
 
 const App = () => {
  // const [theme, setTheme] = useState("dark");
- const theme = "light";
+ const theme = "dark";
 
  const { userState } = useSelector((state) => state.userState);
 
