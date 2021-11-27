@@ -5,22 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateFireStoreData } from "../../redux/fireStoreDataReducer";
 
 export const useRealTime = () => {
- //  const [userInfo, setUserInfo] = useState();
-
- //  useEffect(() => {
- //   auth.onAuthStateChanged((user) => {
- //    console.log("user", user);
- //    console.log("userInfo", userInfo);
- //    setUserInfo(user);
- //   });
- //  }, []);
-
  const { userState } = useSelector((state) => state.userState);
  console.log("userState", userState);
  const [tempData, setTempData] = useState();
-
- //  const ref = db.collection("notes");
- //  const ref = db.collection(uid);
 
  const ref = userState && db.collection("users").doc(userState).collection("notes");
  console.log("ref", ref);
@@ -41,7 +28,6 @@ export const useRealTime = () => {
  }, []);
 
  return tempData;
- //  return undefined;
 };
 
 export const addNoteToDb = (uid, noteData, uuid) => {
@@ -108,21 +94,27 @@ export const starData = (event, noteData) => {
 
 // Authentication
 
-export const register = (email, password) => {
- console.log("email", email.current.value);
- console.log("password", password.current.value);
- auth.createUserWithEmailAndPassword(email.current.value, password.current.value).then((res) => {
+export const register = (firstName, lastName, email, password) => {
+ console.log("firstName", firstName);
+ console.log("lastName", lastName);
+ console.log("email", email);
+ console.log("password", password);
+
+ auth.createUserWithEmailAndPassword(email, password).then((res) => {
   console.log("User created", res);
-  updateUserData(res.user);
+  updateUserData(firstName, lastName, res.user);
  });
 };
 
 export const login = (email, password) => {
+ console.log("email", email);
+ console.log("password", password);
+
  auth
-  .signInWithEmailAndPassword(email.current.value, password.current.value)
+  .signInWithEmailAndPassword(email, password)
   .then((res) => {
    console.log("user logged in", res);
-   updateUserData(res.user);
+   updateUserData(false, false, res.user);
   })
   .catch((err) => {
    console.error("error logging in user", err);
@@ -134,7 +126,7 @@ export const logout = () => {
  console.log("user signed out");
 };
 
-const updateUserData = (user) => {
+const updateUserData = (firstName, lastName, user) => {
  db
   .collection("users")
   .doc(user.uid)
@@ -142,6 +134,8 @@ const updateUserData = (user) => {
    userId: `${user.uid}`,
    email: `${user.email}`,
    displayName: user.displayName ? user.displayName : null,
+   firstName: firstName && firstName,
+   lastName: lastName && lastName,
    emailVerified: user.emailVerified ? user.emailVerified : null,
    lastSignInTime: user.metadata.lastSignInTime,
    creationTime: user.metadata.creationTime,

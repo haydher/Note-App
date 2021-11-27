@@ -8,6 +8,12 @@ export const GlobalComponents = createGlobalStyle`
  font-family: "Montserrat", sans-serif;
 }
 
+a, a:hover, a:visited,a:focus, a:active  {
+  text-decoration: none;
+  color: inherit;
+  outline: 0;
+}
+
 .App {
  display: flex;
 }
