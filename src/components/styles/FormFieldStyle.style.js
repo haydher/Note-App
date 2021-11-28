@@ -70,7 +70,7 @@ export const FormFieldStyle = styled.div`
  }
 
  .error {
-  color: ${({ theme }) => theme.error};
+  color: ${({ theme }) => theme.error} !important;
   font-size: 14px;
   font-weight: 600;
   padding-top: 12px;
@@ -81,11 +81,20 @@ export const FormFieldStyle = styled.div`
   justify-content: center;
   align-items: center;
   margin: auto;
+  padding: 8px;
+  border-radius: 8px;
   position: absolute;
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  user-select: none;
+  transition: background-color 0.1s ease;
+
+  :hover {
+   background-color: ${({ theme }) => theme.bodyBgColorTone2};
+   transition: background-color 0.2s ease;
+  }
 
   svg,
   path {

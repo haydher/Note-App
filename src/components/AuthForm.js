@@ -12,9 +12,7 @@ import { useSelector } from "react-redux";
 const AuthForm = ({ signUpBool }) => {
  const { userState } = useSelector((state) => state.userState);
 
- // const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
-
- const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+ const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
   initialValues: {
    firstName: "",
    lastName: "",
@@ -28,11 +26,6 @@ const AuthForm = ({ signUpBool }) => {
    password: Yup.string().min(0, "Password should be longer than 8 characters").required("Password is required"),
   }),
   onSubmit: ({ firstName, lastName, email, password }) => {
-   console.log("firstName: ", firstName);
-   console.log("lastName: ", lastName);
-   console.log("email: ", email);
-   console.log("password: ", password);
-   console.log("clicked");
    signUpBool ? register(firstName, lastName, email, password) : login(email, password);
   },
  });
@@ -56,6 +49,7 @@ const AuthForm = ({ signUpBool }) => {
     {(signUpBool ? signUpArr : loginArr).map((element, index) => (
      <FormFieldContainer
       handleChange={handleChange}
+      handleBlur={handleBlur}
       touched={touched}
       errors={errors}
       key={index}

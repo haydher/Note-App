@@ -11,15 +11,11 @@ export const UserProfileStyle = styled.div`
  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
  cursor: pointer;
 
- .dropDown {
-  position: absolute;
-  background-color: red;
-  bottom: 0;
- }
  & p {
   margin: 45% auto 0 auto;
   transform: translateY(-45%);
   font-size: 24px;
   font-weight: 500;
+  user-select: none;
  }
 `;

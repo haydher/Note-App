@@ -13,6 +13,9 @@ export const lightTheme = {
 
  navHover: "#f3f3f3",
 
+ dropDownColor: "white",
+ dropDownHover: "#f3f3f3",
+
  containerPadding: " 0 70px 0 60px",
 };
 export const darkTheme = {
@@ -29,6 +32,9 @@ export const darkTheme = {
  bodyBgColorTone3: "#313333",
 
  navHover: "#313333",
+
+ dropDownColor: "#313333",
+ dropDownHover: "#1B1D1E",
 
  containerPadding: " 0 70px 0 60px",
 };

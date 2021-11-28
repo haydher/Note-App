@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { FormFieldStyle } from "./styles/FormFieldStyle.style";
 
-const FormFieldContainer = ({ name, placeholder, handleChange, value, touched, errors }) => {
+const FormFieldContainer = ({ name, placeholder, handleChange, value, touched, errors, handleBlur }) => {
  const [togglePass, setTogglePass] = useState(false);
 
  const togglePassState = (e) => {
   e.stopPropagation();
-  togglePass ? setTogglePass(false) : setTogglePass(true);
+  setTogglePass(!togglePass);
  };
 
  return (
@@ -18,6 +18,7 @@ const FormFieldContainer = ({ name, placeholder, handleChange, value, touched, e
      type={(placeholder === "Password" && !togglePass) || placeholder === "Email" ? placeholder.toLowerCase() : "text"}
      placeholder=" "
      name={name}
+     onBlur={handleBlur}
     />
     <span className="placeHolder">{placeholder}</span>
     {name === "password" && (

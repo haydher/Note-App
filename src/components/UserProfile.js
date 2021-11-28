@@ -1,14 +1,14 @@
+import { useState } from "react";
+import DropDown from "./DropDown";
 import { UserProfileStyle } from "./styles/UserProfile.style";
 
 const UserProfile = ({ userName }) => {
+ const [dropDownToggle, setDropDownToggle] = useState(false);
+
  return (
-  <UserProfileStyle>
+  <UserProfileStyle onClick={() => setDropDownToggle(!dropDownToggle)}>
    <p>{userName}</p>
-   {/* <div className="dropDown">
-    <ul>
-     <li>Logout</li>
-    </ul>
-   </div> */}
+   {dropDownToggle && <DropDown />}
   </UserProfileStyle>
  );
 };
