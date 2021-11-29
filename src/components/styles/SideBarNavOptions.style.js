@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 export const LiStyle = styled.li`
+ display: flex;
+ align-items: center;
+
  & ::before {
   content: "";
-  background-color: ${({ theme, activeClass }) => (activeClass === true ? theme.primaryColor : "")};
+  background-color: ${({ theme, activeClass }) => activeClass && theme.primaryColor};
   position: absolute;
   height: 20px;
   width: 20px;
@@ -11,6 +14,15 @@ export const LiStyle = styled.li`
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
  }
-`;
 
-//  theme.primaryColor
+ svg,
+ path,
+ rect {
+  margin-right: 10px;
+  stroke: ${({ theme, activeClass }) => (activeClass ? theme.primaryColor : theme.textColor)};
+ }
+
+ p {
+  color: ${({ theme, activeClass }) => (activeClass ? theme.primaryColor : theme.textColor)};
+ }
+`;

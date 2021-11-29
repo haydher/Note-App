@@ -14,11 +14,10 @@ export const DropDownContainer = styled.div`
   right: 0;
   padding: 0.8rem;
   border-radius: 0.8rem;
-  box-shadow: -11px 35px 150px -10px rgba(0, 0, 0, 0.2);
+  box-shadow: -11px 35px 80px -50px rgba(0, 0, 0, 0.2);
 
   .menuOpt {
    display: flex;
-   justify-content: space-between;
    padding: 14px 16px;
    border-radius: 8px;
    transition: background-color 0.1s ease;

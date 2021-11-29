@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { closeNewNote } from "../redux/newNoteBtnReducer";
 
 import NoteCard from "./NoteCard";
 import { NoteContainerStyle } from "./styles/NoteContainer.style";
@@ -11,11 +12,12 @@ import { useGetElemHeight } from "./utilities";
 import { useRealTime } from "./firebase/utils";
 
 const MainContent = () => {
+ const dispatch = useDispatch();
+
+ // get data from firebase and store in arr
  let data = [];
- console.log("data", data);
  data = useRealTime();
 
- console.log("data", data);
  // redux
  const { newNote } = useSelector((state) => state.toggleNewNoteBtn);
  // change notes layout from grid
@@ -26,17 +28,32 @@ const MainContent = () => {
  // hold the value of the opened not to show on the note
  const [noteOpenData, setNoteOpenData] = useState("");
 
+ const [editState, setEditState] = useState("");
+
+ // open note component
  const openNote = (noteData) => {
   // toggle open note. if opened note is false, set to true
   noteOpen === false && newNote === false && setNoteOpen(true);
   setNoteOpenData(noteData);
+  setEditState("edit");
  };
 
  // close the open note button
  const closeOpenNoteBtn = () => {
+  dispatch(closeNewNote());
   setNoteOpen(false);
   setActive(null);
+  setEditState("");
  };
+
+ // clear some states if new note is being made
+ useEffect(() => {
+  if (newNote === true) {
+   setNoteOpenData("");
+   setNoteOpen(true);
+   setEditState("newNote");
+  }
+ }, [newNote]);
 
  // get the top position of the main container to give fixed height
  const refContainer = useRef(0);
@@ -76,8 +93,11 @@ const MainContent = () => {
       ))}
    </NoteCardContainerStyle>
    {/* only show the open not if value is true */}
-   {noteOpen && !newNote && <OpenNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} />}
-   {newNote && <NewNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} topHeight={height} />}
+   {/* {noteOpen && !newNote && <OpenNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} />} */}
+   {/* {noteOpen && <NewNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} topHeight={height} />} */}
+   {noteOpen && (
+    <NewNote editState={editState} noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} topHeight={height} />
+   )}
   </NoteContainerStyle>
  );
 };

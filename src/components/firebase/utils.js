@@ -6,19 +6,19 @@ import { updateFireStoreData } from "../../redux/fireStoreDataReducer";
 
 export const useRealTime = () => {
  const { userState } = useSelector((state) => state.userState);
- console.log("userState", userState);
+ //  console.log("userState", userState);
  const [tempData, setTempData] = useState();
 
  const ref = userState && db.collection("users").doc(userState).collection("notes");
- console.log("ref", ref);
+ //  console.log("ref", ref);
  const readData = () => {
   ref.orderBy("date", "desc").onSnapshot((querySnapshot) => {
    const data = [];
    querySnapshot.forEach((doc) => {
     data.push(doc.data());
-    console.log("doc.data()", doc.data());
+    // console.log("doc.data()", doc.data());
    });
-   console.log("data", data);
+   //  console.log("data", data);
    setTempData(data);
   });
  };
@@ -32,9 +32,6 @@ export const useRealTime = () => {
 
 export const addNoteToDb = (uid, noteData, uuid) => {
  //
- //
-
- // const docRef = db.collection("notes").doc(uuid);
  const docRef = db.collection("users").doc(uid).collection("notes").doc(uuid);
  docRef
   .get()
@@ -48,7 +45,7 @@ export const addNoteToDb = (uid, noteData, uuid) => {
    }
   })
   .catch((error) => {
-   console.log("Error getting document:", error);
+   console.error("Error getting document:", error);
   });
 };
 

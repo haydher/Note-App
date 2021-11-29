@@ -6,20 +6,27 @@ export const HeaderLeftStyle = styled.div`
  align-items: center;
  padding: 10px 0;
 
- & h1 {
+ h1 {
   margin-right: 80px;
   font-size: 24px;
  }
 
- & .folder {
+ .folder {
   background-color: ${({ theme }) => theme.bodyBgColorTone3};
   display: flex;
+  align-items: center;
   padding: 10px 30px;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
   font-weight: 100;
   cursor: pointer;
   user-select: none;
+
+  h1 {
+   font-size: 18px;
+   font-weight: 500;
+   padding: 6px 0;
+  }
  }
 `;
 
@@ -29,8 +36,8 @@ export const HeaderRightStyle = styled.div`
  align-items: center;
  padding: 10px 0;
 
- & .sortBtn,
- & .newNote {
+ .sortBtn,
+ .newNote {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,11 +48,11 @@ export const HeaderRightStyle = styled.div`
   cursor: pointer;
  }
 
- & .sortBtn {
+ .sortBtn {
   background-color: ${({ theme }) => theme.bodyBgColorTone3};
   margin-right: 30px;
  }
- & .newNote {
+ .newNote {
   background-color: ${({ theme }) => theme.secondaryColor};
  }
 `;

@@ -11,10 +11,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import AuthForm from "./components/AuthForm";
 
 const App = () => {
- // const [theme, setTheme] = useState("dark");
- const theme = "dark";
-
+ const { toggleTheme } = useSelector((state) => state.toggleTheme);
  const { userState } = useSelector((state) => state.userState);
+
+ const theme = toggleTheme;
 
  const dispatch = useDispatch();
 

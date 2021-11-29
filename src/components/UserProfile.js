@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useState, useRef } from "react";
 import DropDown from "./DropDown";
 import { UserProfileStyle } from "./styles/UserProfile.style";
+import { useOutside } from "./utilities";
 
 const UserProfile = ({ userName }) => {
+ const dropDownRef = useRef(null);
+
  const [dropDownToggle, setDropDownToggle] = useState(false);
 
+ const returnState = useOutside(dropDownRef, dropDownToggle);
+
+ useEffect(() => {
+  setDropDownToggle(returnState);
+ }, [returnState]);
+
  return (
-  <UserProfileStyle onClick={() => setDropDownToggle(!dropDownToggle)}>
+  <UserProfileStyle ref={dropDownRef} onClick={() => setDropDownToggle(true)}>
    <p>{userName}</p>
-   {dropDownToggle && <DropDown />}
+   {dropDownToggle && <DropDown setDropDownToggle={setDropDownToggle} />}
   </UserProfileStyle>
  );
 };

@@ -32,3 +32,20 @@ export const useGetElemHeight = (refContainer) => {
  }, []);
  return height;
 };
+
+// detect if clicked outside the drop down menu, if so return true
+export const useOutside = (ref) => {
+ const [refState, setRefState] = useState(false);
+
+ useEffect(() => {
+  const handleClickOutside = (event) =>
+   ref.current && !ref.current.contains(event.target) ? setRefState(false) : setRefState(true);
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+   document.removeEventListener("mousedown", handleClickOutside);
+  };
+ }, [ref, refState]);
+
+ return refState;
+};

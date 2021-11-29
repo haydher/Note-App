@@ -3,6 +3,7 @@ import { HeaderLeftStyle, HeaderRightStyle } from "./styles/HeaderChild.style";
 import { useDispatch } from "react-redux";
 import { newNote } from "../redux/newNoteBtnReducer";
 import { updateNoteGridState } from "../redux/toggleGridReducer";
+import { ReactComponent as ArrowIcon } from "../icons/arrow.svg";
 
 const Header = () => {
  // redux
@@ -14,7 +15,7 @@ const Header = () => {
     <h1>Notes</h1>
     <div className="folder">
      <h1>Default</h1>
-     <img src="imgs/arrow.svg" alt="drop down icon" />
+     <ArrowIcon />
     </div>
    </HeaderLeftStyle>
 
