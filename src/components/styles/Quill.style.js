@@ -67,6 +67,20 @@ export const QuillStyle = styled.div`
  }
 
  // styling the text editor icons
+ .ql-toolbar button,
+ .ql-toolbar button svg,
+ .ql-toolbar button line,
+ .ql-toolbar button path,
+ .ql-toolbar button .ql-fill,
+ .ql-toolbar button rect,
+ .ql-toolbar button circle,
+ .ql-toolbar button polyline {
+  stroke: ${({ theme }) => theme.textColor} !important;
+  color: ${({ theme }) => theme.textColor} !important;
+ }
+ .ql-toolbar button:hover .ql-fill {
+  fill: ${({ theme }) => theme.bodyBgColorTone1} !important;
+ }
  .ql-toolbar button:hover,
  .ql-toolbar button:hover svg,
  .ql-toolbar button:hover line,

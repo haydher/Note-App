@@ -10,7 +10,7 @@ import {
 } from "./styles/NoteCard.style";
 
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeNewNote } from "../redux/newNoteBtnReducer";
 // get html from string on page
 import DOMPurify from "dompurify";
@@ -20,38 +20,31 @@ import { deleteData, starData } from "./firebase/utils";
 import { ReactComponent as TrashIcon } from "../icons/trash.svg";
 import { ReactComponent as StarIcon } from "../icons/star.svg";
 import { ReactComponent as ShareIcon } from "../icons/share.svg";
+import { ReactComponent as RestoreIcon } from "../icons/restore.svg";
 
-const NoteCard = ({ noteClick, data, isNoteOpen, index, active, toggle }) => {
+const NoteCard = ({ noteClick, data, isNoteOpen, index, active, toggle, trash }) => {
  //
-
+ const { userState } = useSelector((state) => state.userState);
  // redux
  const dispatch = useDispatch();
+ const { toggleNoteGrid } = useSelector((state) => state.toggleGrid);
 
- const scrollContainer = useRef();
-
- // use ref instead of `e` to access the parent,
- // far easier than using other methods to get to parent
- const scroll = () => {
-  requestAnimationFrame(() => {
-   scrollContainer.current.scrollIntoView({ behavior: "smooth" });
-  });
- };
+ const scrollContainerRef = useRef();
 
  return (
   <NoteCardStyle
+   id={data.id}
    //set active prop so bg changes on click
    active={active === index ? "active" : ""}
-   onClick={(e) => {
+   onClick={() => {
     // pass data back to show in open note
     noteClick(data);
-    // //scroll the element in view
-    scroll(e);
     // toggle the active class from each card
-    toggle(index, scrollContainer);
+    toggle(index, scrollContainerRef);
     // close new note container if another note is clicked
     dispatch(closeNewNote());
    }}
-   ref={scrollContainer}
+   ref={scrollContainerRef}
    // prop to pass to style-comp to toggle class properties, adds margin below the container
    isNoteOpen={isNoteOpen}
   >
@@ -61,39 +54,50 @@ const NoteCard = ({ noteClick, data, isNoteOpen, index, active, toggle }) => {
     </div>
 
     <Utilities className="utilities" active={active === index ? "active" : ""}>
-     <Icon className="deleteNote" onClick={(e) => deleteData(e, data)}>
-      <TrashIcon />
-     </Icon>
-     <Icon
-      className="starNote"
-      fillSvg={data.stared && true}
-      active={active === index ? "active" : ""}
-      onClick={(e) => starData(e, data)}
-     >
-      <StarIcon />
-     </Icon>
+     {!trash && (
+      <Icon className="deleteNote" onClick={(e) => deleteData(userState, e, data, "delete")}>
+       <TrashIcon />
+      </Icon>
+     )}
+     {!trash && (
+      <Icon
+       className="starNote"
+       fillSvg={data.stared && true}
+       active={active === index ? "active" : ""}
+       onClick={(e) => starData(userState, e, data)}
+      >
+       <StarIcon />
+      </Icon>
+     )}
+     {trash && (
+      <Icon className="deleteNote" onClick={(e) => deleteData(userState, e, data, "restore")}>
+       <RestoreIcon />
+      </Icon>
+     )}
     </Utilities>
    </NoteHeader>
 
    {/* dont show tags div if note has no tags */}
    {data.tags.length > 1 && (
-    <NoteTags>
+    <NoteTags active={active === index ? "active" : ""}>
      <p>{data.tags}</p>
     </NoteTags>
    )}
 
-   <NoteData className="ql-editor">
+   <NoteData toggleNoteGrid={toggleNoteGrid} className="ql-editor">
     {parse(DOMPurify.sanitize(data.noteData))}
     {active !== index && <div className="overflow"></div>}
    </NoteData>
 
    <NoteFooter>
     <p>{data.date}</p>
-    <ShareBtnStyle className="utilities" active={active === index ? "active" : ""}>
-     <Utilities>
-      <ShareIcon />
-     </Utilities>
-    </ShareBtnStyle>
+    {/* <ShareBtnStyle className="utilities shareBtn" active={active === index ? "active" : ""}>
+     {!trash && (
+      <Utilities>
+       <ShareIcon />
+      </Utilities>
+     )}
+    </ShareBtnStyle> */}
    </NoteFooter>
   </NoteCardStyle>
  );

@@ -4,7 +4,7 @@ export const NoteContainerStyle = styled.div`
  display: flex;
  justify-content: space-between;
  flex-grow: 1;
- padding: ${({ theme }) => theme.containerPadding};
+ padding: 0 60px;
  padding-top: 50px;
  height: ${({ topHeight }) => (topHeight !== "auto" ? topHeight + "px" : topHeight)};
  overflow-y: scroll;

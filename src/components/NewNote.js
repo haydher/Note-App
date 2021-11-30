@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { addNoteToDb } from "./firebase/utils";
-import { useSelector, useDispatch } from "react-redux";
-import { closeNewNote } from "../redux/newNoteBtnReducer";
+import { useSelector } from "react-redux";
 
 import { OpenNoteStyle } from "./styles/OpenNote.style";
 import { NoteHeader, NoteTags, NoteData } from "./styles/NoteCard.style";
 import Quill from "./Quill";
 import Input from "./Input";
-
+import { ReactComponent as CrossIcon } from "../icons/cross.svg";
 // clean user input
 import DOMPurify from "dompurify";
 
 import { getCurrDate } from "./utilities";
 
-const NewNote = ({ topHeight, noteOpenData, closeOpenNote, editState }) => {
+const NewNote = ({ topHeight, noteOpenData, closeOpenNote, editState, toggleActive }) => {
  // redux
- const dispatch = useDispatch();
  const { userState } = useSelector((state) => state.userState);
 
  // store the data temporarily
@@ -80,8 +78,20 @@ const NewNote = ({ topHeight, noteOpenData, closeOpenNote, editState }) => {
 
  // send the updated data to redux
  useEffect(() => {
-  editState === "edit" && addNoteToDb(userState, editOpenNote, editOpenNote.id);
-  editState === "newNote" && newNoteData.noteData.length > 0 && addNoteToDb(userState, newNoteData, newNoteData.id);
+  if (editState === "edit") {
+   if (
+    editOpenNote.title === noteOpenData.title &&
+    editOpenNote.tags === editOpenNote.tags &&
+    editOpenNote.noteData === noteOpenData.noteData
+   )
+    return;
+   addNoteToDb(userState, editOpenNote, editOpenNote.id);
+   toggleActive(0, undefined, editOpenNote.id);
+  }
+  if (editState === "newNote" && newNoteData.noteData.length > 0) {
+   addNoteToDb(userState, newNoteData, newNoteData.id);
+   toggleActive(0, undefined, newNoteData.id);
+  }
  }, [newNoteData, editOpenNote]);
 
  return (
@@ -97,11 +107,11 @@ const NewNote = ({ topHeight, noteOpenData, closeOpenNote, editState }) => {
      />
     </div>
     <div className="utilities">
-     <div className="saveNote">
+     {/* <div className="saveNote">
       <img src="imgs/save.svg" alt="Close note" />
-     </div>
+     </div> */}
      <div className="closeOpenNote" onClick={closeOpenNote}>
-      <img src="imgs/cross.svg" alt="Close note" />
+      <CrossIcon />
      </div>
     </div>
    </NoteHeader>

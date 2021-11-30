@@ -11,6 +11,9 @@ import EmptyNotesContainer from "./EmptyNotesContainer";
 import { useGetElemHeight } from "./utilities";
 import { useRealTime } from "./firebase/utils";
 
+import Masonry from "react-masonry-css";
+import PopUp from "./PopUp";
+
 const MainContent = () => {
  const dispatch = useDispatch();
 
@@ -63,103 +66,60 @@ const MainContent = () => {
  // toggle the active class from each card
  const [active, setActive] = useState(null);
  // toggle active class on each note
- const toggleActive = (index, scrollContainer) =>
-  scrollContainer.current.className.includes("active") ? setActive(0) : setActive(index);
+ const toggleActive = (index, scrollContainer) => {
+  if (scrollContainer !== undefined) {
+   scrollContainer.current.className.includes("active") ? setActive(0) : setActive(index);
+   requestAnimationFrame(() => {
+    scrollContainer.current.scrollIntoView({ behavior: "smooth" });
+   });
+  } else setActive(0);
+ };
 
  // if notes is empty dont render anything
  // if (data.length < 1) return <EmptyNotesContainer />;
 
+ const breakpointColumnsObj = {
+  default: 3,
+  1200: 3,
+  1000: 2, // at 1000px make it 2 columns
+  700: 1,
+ };
+
  return (
   <NoteContainerStyle topHeight={height}>
-   <NoteCardContainerStyle
-    toggleGrid={(newNote || noteOpen || toggleNoteGrid) && true}
-    ref={refContainer}
-    topHeight={height}
-   >
-    {/* show all the notes */}
-    {data !== undefined &&
-     data
-      .filter((noteData) => !noteData.trash)
-      .map((noteData, index) => (
-       <NoteCard
-        key={noteData.id}
-        index={index}
-        data={noteData}
-        noteClick={openNote}
-        isNoteOpen={(newNote || noteOpen) && true}
-        toggle={toggleActive}
-        active={active}
-       />
-      ))}
+   <NoteCardContainerStyle changeLayout={toggleNoteGrid} toggleGrid={(newNote || noteOpen) && true} ref={refContainer}>
+    <Masonry breakpointCols={breakpointColumnsObj} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
+     {/* <PopUp /> */}
+
+     {data !== undefined && data.filter((noteData) => !noteData.trash).length > 0
+      ? data.map(
+         (noteData, index) =>
+          !noteData.trash && (
+           <NoteCard
+            key={noteData.id}
+            index={index}
+            data={noteData}
+            noteClick={openNote}
+            isNoteOpen={(newNote || noteOpen) && true}
+            toggle={toggleActive}
+            active={active}
+           />
+          )
+        )
+      : !newNote && <EmptyNotesContainer topHeight={height} />}
+    </Masonry>
    </NoteCardContainerStyle>
-   {/* only show the open not if value is true */}
    {/* {noteOpen && !newNote && <OpenNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} />} */}
-   {/* {noteOpen && <NewNote noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} topHeight={height} />} */}
    {noteOpen && (
-    <NewNote editState={editState} noteOpenData={noteOpenData} closeOpenNote={closeOpenNoteBtn} topHeight={height} />
+    <NewNote
+     editState={editState}
+     toggleActive={toggleActive}
+     noteOpenData={noteOpenData}
+     closeOpenNote={closeOpenNoteBtn}
+     topHeight={height}
+    />
    )}
   </NoteContainerStyle>
  );
 };
 export default MainContent;
-
-/*
-
- const { newNote } = useSelector((state) => state.toggleNewNoteBtn);
-
- // const { fireStoreNoteData } = useSelector((state) => state.fireStoreData);
- // useEffect(() => {
- //  fireStoreNoteData !== undefined && fireStoreNoteData.length > 1 && setData(fireStoreNoteData);
- // }, [fireStoreNoteData]);
-
- // updated data from redux
- // data from when new note is being typed
- // const { noteData } = useSelector((state) => state.noteData);
-
- // holds the data for the new note and previous notes
- // const [data, setData] = useState(fireStoreNoteData);
-
- // get update data on the note cards
- // useEffect(() => {
- //  const result = data.some((e) => e.id === noteData.id);
- //  !result && noteData.id !== undefined && setData((prevData) => [noteData, ...prevData]);
- //  setData((prevData) => {
- //   return prevData.map((item) => {
- //    if (item.id === noteData.id) return noteData;
- //    return item;
- //   });
- //  });
- // }, [noteData]);
-
- // toggle open the opened note tab
- const [noteOpen, setNoteOpen] = useState(false);
- // hold the value of the opened not to show on the note
- const [noteOpenData, setNoteOpenData] = useState("");
-
- const openNote = (noteData) => {
-  // toggle open note. if opened note is false, set to true
-  noteOpen === false && newNote === false && setNoteOpen(true);
-  setNoteOpenData(noteData);
- };
-
- // close the open note button
- const closeOpenNoteBtn = () => {
-  setNoteOpen(false);
-  setActive(null);
- };
-
- // get the top position of the main container to give fixed height
- const refContainer = useRef(0);
- let height = "auto";
- height = useGetElemHeight(refContainer);
-
- // toggle the active class from each card
- const [active, setActive] = useState(null);
- // toggle active class on each note
- const toggleActive = (index, scrollContainer) =>
-  scrollContainer.current.className.includes("active") ? setActive(0) : setActive(index);
-
- // if notes is empty dont render anything
- // if (data.length < 1) return <EmptyNotesContainer />;
-
-*/

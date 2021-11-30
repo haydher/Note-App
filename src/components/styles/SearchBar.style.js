@@ -8,7 +8,7 @@ export const SearchBarStyle = styled.div`
  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
  border-radius: 15px;
 
- & input {
+ input {
   background-color: ${({ theme }) => theme.bodyBgColorTone3};
   width: 90%;
   height: 100%;
@@ -22,12 +22,12 @@ export const SearchBarStyle = styled.div`
   font-weight: 600;
   font-size: 16px;
 
-  &::placeholder {
+  ::placeholder {
    color: ${({ theme }) => theme.textColor};
   }
  }
 
- & .searchBtn {
+ .searchBtn {
   background-color: ${({ theme }) => theme.bodyBgColorTone3};
   display: flex;
   justify-content: center;
@@ -37,5 +37,11 @@ export const SearchBarStyle = styled.div`
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   cursor: pointer;
+
+  svg,
+  path,
+  rect {
+   stroke: ${({ theme }) => theme.textColor};
+  }
  }
 `;

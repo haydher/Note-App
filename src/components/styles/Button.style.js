@@ -14,7 +14,8 @@ export const ButtonStyle = styled.button`
  font-size: 14px;
 
  :hover {
-  background-color: ${({ theme, primary }) => (primary ? theme.secondaryColorHover : theme.tertiaryColor)};
+  background-color: ${({ theme, primary }) => (primary ? theme.secondaryColorHover : theme.LinkColor)};
+  color: ${({ theme, primary }) => !primary && theme.bodyBgColorTone1};
   transition: background-color 0.2s ease;
  }
 `;

@@ -1,16 +1,28 @@
 import styled from "styled-components";
 
 export const NoteCardContainerStyle = styled.div`
- display: ${({ toggleGrid }) => (toggleGrid === true ? "block" : "grid")};
- grid-template-columns: repeat(3, 1fr);
- grid-column-gap: 40px;
- grid-auto-rows: min-content;
- grid-row-gap: 40px;
  width: ${({ toggleGrid }) => (toggleGrid === true ? "50%" : "100%")};
  padding-right: ${({ toggleGrid }) => (toggleGrid === true ? "10px" : "")};
  margin-right: ${({ toggleGrid }) => (toggleGrid === true ? "10px" : "")};
  margin-bottom: 25px;
  overflow-y: ${({ toggleGrid }) => (toggleGrid === true ? "scroll" : "visible")};
+
+ // for Masonry
+ .my-masonry-grid {
+  display: ${({ toggleGrid, changeLayout }) => (toggleGrid || changeLayout ? "block" : "flex")};
+  margin-left: -30px;
+  width: auto;
+ }
+ .my-masonry-grid_column {
+  padding-left: 30px;
+  background-clip: padding-box;
+  width: 100% !important;
+ }
+
+ /* Style your items */
+ .my-masonry-grid_column > div {
+  margin-bottom: 30px;
+ }
 
  &::-webkit-scrollbar {
   width: 10px;

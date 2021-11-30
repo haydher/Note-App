@@ -25,7 +25,6 @@ const App = () => {
   });
  }, []);
 
- console.log("userState");
  return (
   <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
    <GlobalComponents />

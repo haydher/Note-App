@@ -22,6 +22,12 @@ export const HeaderLeftStyle = styled.div`
   cursor: pointer;
   user-select: none;
 
+  svg,
+  path,
+  rect {
+   stroke: ${({ theme }) => theme.textColor};
+  }
+
   h1 {
    font-size: 18px;
    font-weight: 500;
@@ -35,6 +41,7 @@ export const HeaderRightStyle = styled.div`
  justify-content: space-between;
  align-items: center;
  padding: 10px 0;
+ user-select: none;
 
  .sortBtn,
  .newNote {
@@ -51,8 +58,30 @@ export const HeaderRightStyle = styled.div`
  .sortBtn {
   background-color: ${({ theme }) => theme.bodyBgColorTone3};
   margin-right: 30px;
+  svg,
+  path,
+  rect,
+  circle {
+   stroke: ${({ theme }) => theme.textColor};
+   fill: ${({ theme }) => theme.textColor};
+  }
  }
  .newNote {
   background-color: ${({ theme }) => theme.secondaryColor};
+ }
+
+ .trash {
+  background-color: ${({ theme }) => theme.error};
+  color: white;
+  width: auto;
+  padding: 0 16px;
+  font-weight: 500;
+  filter: opacity(0.8);
+  transition: filter 0.1s ease;
+
+  :hover {
+   filter: opacity(1);
+   transition: filter 0.3s ease;
+  }
  }
 `;

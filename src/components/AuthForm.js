@@ -1,4 +1,4 @@
-import { login, register } from "./firebase/utils";
+import { login, loginWithGoogle, register } from "./firebase/utils";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { BgContainer } from "./styles/BgContainer.style";
@@ -8,9 +8,12 @@ import Button from "./Button";
 import { LinkStyle } from "./styles/LinkStyle.style";
 import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 const AuthForm = ({ signUpBool }) => {
  const { userState } = useSelector((state) => state.userState);
+
+ const [result, setRes] = useState();
 
  const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
   initialValues: {
@@ -20,15 +23,30 @@ const AuthForm = ({ signUpBool }) => {
    password: "",
   },
   validationSchema: Yup.object({
-   firstName: signUpBool && Yup.string().required("First name is required"),
-   lastName: signUpBool && Yup.string().required("Last name is required"),
+   firstName:
+    signUpBool &&
+    Yup.string()
+     .trim("First name cannot include leading and trailing spaces")
+     .min(1, "First name needs to be at least 1 character long")
+     .required("First name is required"),
+   lastName:
+    signUpBool &&
+    Yup.string()
+     .trim("Last name cannot include leading and trailing spaces")
+     .min(1, "Last name needs to be at least 1 character long")
+     .required("Last name is required"),
    email: Yup.string().email().required("Email is required"),
-   password: Yup.string().min(0, "Password should be longer than 8 characters").required("Password is required"),
+   password: Yup.string().min(8, "Password should be longer than 8 characters").required("Password is required"),
   }),
   onSubmit: ({ firstName, lastName, email, password }) => {
-   signUpBool ? register(firstName, lastName, email, password) : login(email, password);
+   setRes();
+   signUpBool ? register(firstName, lastName, email, password, setRes) : login(email, password, setRes);
   },
  });
+
+ useEffect(() => {
+  console.log(result);
+ }, [result]);
 
  const signUpArr = [
   ["firstName", "First Name"],
@@ -44,8 +62,14 @@ const AuthForm = ({ signUpBool }) => {
  return (
   <BgContainer>
    {userState && <Navigate to="/" />}
+
    <FormContainer>
     <h1>{signUpBool ? "Create Account" : "Login"}</h1>
+    {result && result.status !== 200 ? (
+     <div className="errContainer">
+      <p className="error">{result.message}</p>
+     </div>
+    ) : null}
     {(signUpBool ? signUpArr : loginArr).map((element, index) => (
      <FormFieldContainer
       handleChange={handleChange}
@@ -60,7 +84,11 @@ const AuthForm = ({ signUpBool }) => {
     ))}
 
     <Button handleSubmit={handleSubmit} type="submit" text={signUpBool ? "Sign Up" : "Login"} primary />
-    {signUpBool && <Button type="button" text="Sign Up with Google" />}
+    <Button
+     handleSubmit={loginWithGoogle}
+     type="submit"
+     text={signUpBool ? "Sign Up with Google" : "Sign in with Google"}
+    />
     <p>
      {signUpBool ? "Already have an account?" : "Don't have an account?"}{" "}
      <LinkStyle>

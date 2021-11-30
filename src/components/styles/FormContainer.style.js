@@ -9,6 +9,22 @@ export const FormContainer = styled.div`
  padding: 80px;
  border-radius: 12px;
 
+ .errContainer {
+  background-color: ${({ theme }) => theme.error};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  border-radius: 12px;
+
+  p {
+   color: white !important;
+   padding: 0 !important;
+  }
+ }
  h1 {
   color: ${({ theme }) => theme.primaryColor};
   margin-bottom: 30px;
