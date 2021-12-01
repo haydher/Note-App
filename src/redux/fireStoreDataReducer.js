@@ -8,7 +8,6 @@ export const fireStoreSlice = createSlice({
  reducers: {
   updateFireStoreData: (state, action) => {
    state.fireStoreNoteData = action.payload;
-   console.log("state.fireStoreNoteData", state.fireStoreNoteData);
   },
  },
 });

@@ -20,7 +20,6 @@ const App = () => {
 
  useEffect(() => {
   auth.onAuthStateChanged((user) => {
-   console.log("user", user);
    user ? dispatch(updateUserState(user.uid)) : dispatch(updateUserState(undefined));
   });
  }, []);

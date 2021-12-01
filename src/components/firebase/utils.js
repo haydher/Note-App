@@ -76,7 +76,6 @@ export const deleteData = (uid, event, noteData, type) => {
 export const emptyTrash = (uid) => {
  const docRef = db.collection("users").doc(uid).collection("notes");
  const query = docRef.where("trash", "==", true);
- console.log(query);
  query
   .get()
   .then((querySnapshot) => {
@@ -100,9 +99,7 @@ export const starData = (uid, event, noteData) => {
  const docRef = db.collection("users").doc(uid).collection("notes").doc(noteData.id);
  docRef
   .set({ ...noteData, stared: noteData.stared === true ? false : true })
-  .then(() => {
-   console.log("Edited doc, Stared");
-  })
+  .then(() => {})
   .catch((error) => {
    console.error("Error editing document: ", error);
   });
@@ -183,7 +180,6 @@ export const loginWithGoogle = () => {
 
 export const logout = () => {
  auth.signOut();
- console.log("user signed out");
 };
 
 const updateUserData = (firstName, lastName, user) => {
@@ -206,7 +202,7 @@ const updateUserData = (firstName, lastName, user) => {
    console.log("Added user doc", res);
   })
   .catch((error) => {
-   console.error("Error writing user document: ", error);
+   console.error("Error writing  document");
   });
 };
 

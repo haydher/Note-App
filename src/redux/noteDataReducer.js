@@ -8,7 +8,6 @@ export const noteDataSlice = createSlice({
  reducers: {
   updateData: (state, action) => {
    state.noteData = action.payload;
-   console.log("state.noteData", state.noteData);
   },
  },
 });

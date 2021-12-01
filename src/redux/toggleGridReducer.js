@@ -8,7 +8,6 @@ export const toggleGridSlice = createSlice({
  reducers: {
   updateNoteGridState: (state) => {
    state.toggleNoteGrid === true ? (state.toggleNoteGrid = false) : (state.toggleNoteGrid = true);
-   console.log("state.toggleNoteGrid", state.toggleNoteGrid);
   },
  },
 });

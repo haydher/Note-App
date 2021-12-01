@@ -8,7 +8,6 @@ export const currTabSlice = createSlice({
  reducers: {
   updateTab: (state, action) => {
    state.currTab = action.payload;
-   console.log("state.currTab", state.currTab);
   },
  },
 });

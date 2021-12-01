@@ -8,11 +8,9 @@ export const newNoteBtnSlice = createSlice({
  reducers: {
   newNote: (state) => {
    state.newNote = true;
-   console.log("state.newNote", state.newNote);
   },
   closeNewNote: (state) => {
    state.newNote = false;
-   console.log("state.newNote", state.newNote);
   },
  },
 });
